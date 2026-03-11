@@ -24,7 +24,7 @@ jobs:
       
       - name: Build with Swift Package Manager
         run: |
-          swift build -c release --destination generic/iOS
+          swift build -c release
       
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
