@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 17.0, macOS 14.0, *)
 struct HomeView: View {
     @EnvironmentObject var weatherService: WeatherService
     @State private var greeting: String = ""

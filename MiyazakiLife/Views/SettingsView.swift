@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 17.0, macOS 14.0, *)
 struct SettingsView: View {
     @EnvironmentObject var settingsManager: SettingsManager
     @State private var showingLocationAlert = false

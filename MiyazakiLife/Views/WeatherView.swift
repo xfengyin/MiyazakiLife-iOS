@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 17.0, macOS 14.0, *)
 struct WeatherView: View {
     @EnvironmentObject var weatherService: WeatherService
     @State private var isRefreshing = false
@@ -206,6 +207,7 @@ struct DailyForecastView: View {
 }
 
 // MARK: - 加载视图
+@available(iOS 17.0, macOS 14.0, *)
 struct LoadingView: View {
     var body: some View {
         VStack {
@@ -219,6 +221,7 @@ struct LoadingView: View {
 }
 
 // MARK: - 错误视图
+@available(iOS 17.0, macOS 14.0, *)
 struct ErrorView: View {
     let onRetry: () -> Void
     
