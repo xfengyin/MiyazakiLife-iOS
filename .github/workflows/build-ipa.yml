@@ -1,4 +1,4 @@
-name: Build IPA (Unsigned)
+name: Build iOS App
 
 on:
   push:
@@ -17,44 +17,18 @@ jobs:
       - name: Select Latest Xcode
         run: |
           echo "Available Xcode versions:"
-          ls /Applications/ | grep Xcode
-          sudo xcode-select -s /Applications/Xcode_16.0.app/Contents/Developer || \
-          sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer || \
-          sudo xcode-select -s /Applications/Xcode_15.2.app/Contents/Developer || \
-          sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+          ls /Applications/ | grep Xcode || echo "No Xcode found"
+          sudo xcode-select -s /Applications/Xcode_16.app/Contents/Developer || \
+          sudo xcode-select -s /Applications/Xcode.app/Contents/Developer || \
+          echo "Using default Xcode"
       
-      - name: Build Archive
+      - name: Build with Swift Package Manager
         run: |
-          xcodebuild -project MiyazakiLife.xcodeproj \
-            -scheme MiyazakiLife \
-            -configuration Release \
-            -destination 'generic/platform=iOS' \
-            -archivePath ${{ github.workspace }}/build/MiyazakiLife.xcarchive \
-            clean archive \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO
+          swift build -c release --destination generic/iOS
       
-      - name: Export IPA (Unsigned)
-        run: |
-          xcodebuild -exportArchive \
-            -archivePath ${{ github.workspace }}/build/MiyazakiLife.xcarchive \
-            -exportPath ${{ github.workspace }}/build \
-            -exportOptionsPlist ${{ github.workspace }}/ExportOptions.plist \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO
-      
-      - name: Upload IPA
+      - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: MiyazakiLife-Unsigned
-          path: ${{ github.workspace }}/build/MiyazakiLife.ipa
-          retention-days: 30
-      
-      - name: Upload App
-        uses: actions/upload-artifact@v4
-        with:
-          name: MiyazakiLife-App
-          path: ${{ github.workspace }}/build/MiyazakiLife.app
+          name: MiyazakiLife-Build
+          path: .build/release/
           retention-days: 30
