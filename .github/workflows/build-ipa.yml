@@ -14,11 +14,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_15.0.app/Contents/Developer
-      
-      - name: List available Xcode versions
-        run: ls /Applications/ | grep Xcode
+      - name: Select Latest Xcode
+        run: |
+          echo "Available Xcode versions:"
+          ls /Applications/ | grep Xcode
+          sudo xcode-select -s /Applications/Xcode_16.0.app/Contents/Developer || \
+          sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer || \
+          sudo xcode-select -s /Applications/Xcode_15.2.app/Contents/Developer || \
+          sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
       
       - name: Build Archive
         run: |
