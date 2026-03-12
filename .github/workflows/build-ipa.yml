@@ -1,4 +1,4 @@
-name: Build iOS App
+name: Build and Export IPA
 
 on:
   push:
@@ -11,24 +11,33 @@ jobs:
     runs-on: macos-latest
     
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Select Latest Xcode
+      - name: Set up Xcode
         run: |
-          echo "Available Xcode versions:"
-          ls /Applications/ | grep Xcode || echo "No Xcode found"
-          sudo xcode-select -s /Applications/Xcode_16.app/Contents/Developer || \
-          sudo xcode-select -s /Applications/Xcode.app/Contents/Developer || \
-          echo "Using default Xcode"
+          sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+          sudo xcodebuild -license accept
       
-      - name: Build with Swift Package Manager
+      - name: Create archive
         run: |
-          swift build -c release
+          xcodebuild -workspace MiyazakiLife.xcworkspace \
+            -scheme MiyazakiLife \
+            -configuration Release \
+            -archivePath $GITHUB_WORKSPACE/build/MiyazakiLife.xcarchive \
+            archive
       
-      - name: Upload Build Artifact
+      - name: Export IPA
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath $GITHUB_WORKSPACE/build/MiyazakiLife.xcarchive \
+            -exportOptionsPlist $GITHUB_WORKSPACE/exportOptions.plist \
+            -exportPath $GITHUB_WORKSPACE/build/export \
+            -allowProvisioningUpdates
+      
+      - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: MiyazakiLife-Build
-          path: .build/release/
+          name: MiyazakiLife-IPA
+          path: $GITHUB_WORKSPACE/build/export/*.ipa
           retention-days: 30
