@@ -1,86 +1,82 @@
-name: Build and Export IPA
+name: Build IPA (Unsigned)
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: macos-latest
-    
+    runs-on: macos-15
+    timeout-minutes: 30
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      - name: Set up Xcode
+
+      - name: Select Xcode
         run: |
+          sudo xcode-select --switch /Applications/Xcode_16.2.app/Contents/Developer || \
           sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-          sudo xcodebuild -license accept
-      
-      - name: Install Certificate
-        env:
-          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
-          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-        run: |
-          # 创建临时密钥链
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          
-          # 导入证书
-          echo $BUILD_CERTIFICATE_BASE64 | base64 --decode > $RUNNER_TEMP/certificate.p12
-          security import $RUNNER_TEMP/certificate.p12 -k $KEYCHAIN_PATH -P "$P12_PASSWORD" -T /usr/bin/codesign
-          
-          # 将默认密钥链设置为我们的密钥链
-          security list-keychains -s $KEYCHAIN_PATH
-      
-      - name: Install Provisioning Profile
-        env:
-          PROVISIONING_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
-        run: |
-          PP_PATH=$RUNNER_TEMP/MiyazakiLife.mobileprovision
-          echo $PROVISIONING_PROFILE_BASE64 | base64 --decode > $PP_PATH
-          
-          # 复制到标准位置
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles/
-      
+          xcodebuild -version
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
       - name: Generate Xcode Project
-        run: swift package generate-xcodeproj
-      
-      - name: Build Archive
+        run: xcodegen generate
+
+      - name: Build for iOS Simulator (no signing)
         run: |
-          xcodebuild -project MiyazakiLife.xcodeproj \
+          xcodebuild build \
+            -project MiyazakiLife.xcodeproj \
+            -scheme MiyazakiLife \
+            -configuration Release \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build/DerivedData \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Build Archive (unsigned)
+        run: |
+          xcodebuild archive \
+            -project MiyazakiLife.xcodeproj \
             -scheme MiyazakiLife \
             -configuration Release \
             -sdk iphoneos \
-            -derivedDataPath ${{ github.workspace }}/build/DerivedData \
-            -archivePath ${{ github.workspace }}/build/MiyazakiLife.xcarchive \
-            archive
-      
-      - name: Export IPA
+            -destination 'generic/platform=iOS' \
+            -archivePath build/MiyazakiLife.xcarchive \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            AD_HOC_CODE_SIGNING_ALLOWED=YES
+
+      - name: Create unsigned IPA
         run: |
-          xcodebuild -exportArchive \
-            -archivePath ${{ github.workspace }}/build/MiyazakiLife.xcarchive \
-            -exportOptionsPlist ExportOptions.plist \
-            -exportPath ${{ github.workspace }}/build/export \
-            -allowProvisioningUpdates
-      
+          mkdir -p build/Payload
+          if [ -d "build/MiyazakiLife.xcarchive/Products/Applications/MiyazakiLife.app" ]; then
+            cp -r "build/MiyazakiLife.xcarchive/Products/Applications/MiyazakiLife.app" build/Payload/
+          elif [ -d "build/MiyazakiLife.xcarchive/Products/Applications" ]; then
+            APP=$(find build/MiyazakiLife.xcarchive/Products/Applications -name "*.app" -maxdepth 1 | head -1)
+            cp -r "$APP" build/Payload/
+          fi
+          cd build && zip -r MiyazakiLife-unsigned.ipa Payload/
+          ls -lh MiyazakiLife-unsigned.ipa
+
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: MiyazakiLife-IPA
-          path: ${{ github.workspace }}/build/export/*.ipa
+          name: MiyazakiLife-unsigned-IPA
+          path: build/MiyazakiLife-unsigned.ipa
           retention-days: 30
-      
-      - name: Upload for Ad-Hoc Distribution
-        if: success()
+
+      - name: Upload Archive
         uses: actions/upload-artifact@v4
         with:
-          name: MiyazakiLife-AdHoc
-          path: ${{ github.workspace }}/build/export/
+          name: MiyazakiLife-xcarchive
+          path: build/MiyazakiLife.xcarchive
           retention-days: 7
