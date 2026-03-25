@@ -51,7 +51,6 @@ class WeatherService: NSObject, ObservableObject {
             isLoading = false
         }
         
-        // 使用宫崎市的默认坐标 (31.9077, 131.4202)
         let latitude = 31.9077
         let longitude = 131.4202
         
@@ -81,7 +80,9 @@ class WeatherService: NSObject, ObservableObject {
             throw WeatherError.networkError
         }
         
-        let weatherResponse = try JSONDecoder().decode(WeatherAPIResponse.self, from: data)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let weatherResponse = try decoder.decode(WeatherAPIResponse.self, from: data)
         parseWeatherData(weatherResponse)
     }
     
@@ -92,10 +93,10 @@ class WeatherService: NSObject, ObservableObject {
             currentWeather = WeatherData(
                 id: UUID().uuidString,
                 location: "宫崎市",
-                temperature: current.temperature,
+                temperature: current.temperature2m,
                 feelsLike: current.apparentTemperature,
-                humidity: current.relativeHumidity,
-                windSpeed: current.windSpeed,
+                humidity: current.relativeHumidity2m,
+                windSpeed: current.windSpeed10m,
                 description: WeatherData.description(for: current.weatherCode),
                 iconName: WeatherData.iconName(for: current.weatherCode),
                 timestamp: ISO8601DateFormatter().date(from: current.time) ?? Date()
@@ -104,8 +105,9 @@ class WeatherService: NSObject, ObservableObject {
         
         // 解析小时预报
         if let hourly = response.hourly {
-            hourlyForecast = zip(hourly.time, hourly.temperature).enumerated().map { index, (time, temp) in
-                HourlyWeatherData(
+            hourlyForecast = zip(hourly.time, hourly.temperature2m).enumerated().map { (index, pair) in
+                let (time, temp) = pair
+                return HourlyWeatherData(
                     id: UUID().uuidString,
                     time: ISO8601DateFormatter().date(from: time) ?? Date(),
                     temperature: temp,
@@ -117,12 +119,13 @@ class WeatherService: NSObject, ObservableObject {
         
         // 解析多日预报
         if let daily = response.daily {
-            dailyForecast = zip(daily.time, daily.temperatureMax).enumerated().map { index, (time, tempMax) in
-                DailyWeatherData(
+            dailyForecast = zip(daily.time, daily.temperature2mMax).enumerated().map { (index, pair) in
+                let (time, tempMax) = pair
+                return DailyWeatherData(
                     id: UUID().uuidString,
                     date: ISO8601DateFormatter().date(from: time) ?? Date(),
                     tempMax: tempMax,
-                    tempMin: daily.temperatureMin[index],
+                    tempMin: daily.temperature2mMin[index],
                     iconName: WeatherData.iconName(for: daily.weatherCode[index]),
                     description: WeatherData.description(for: daily.weatherCode[index]),
                     precipitationChance: 0
@@ -173,22 +176,22 @@ struct WeatherAPIResponse: Codable {
 
 struct CurrentWeather: Codable {
     let time: String
-    let temperature: Double
-    let relativeHumidity: Int
+    let temperature2m: Double
+    let relativeHumidity2m: Int
     let apparentTemperature: Double
     let weatherCode: Int
-    let windSpeed: Double
+    let windSpeed10m: Double
 }
 
 struct HourlyWeather: Codable {
     let time: [String]
-    let temperature: [Double]
+    let temperature2m: [Double]
     let weatherCode: [Int]
 }
 
 struct DailyWeather: Codable {
     let time: [String]
-    let temperatureMax: [Double]
-    let temperatureMin: [Double]
+    let temperature2mMax: [Double]
+    let temperature2mMin: [Double]
     let weatherCode: [Int]
 }
