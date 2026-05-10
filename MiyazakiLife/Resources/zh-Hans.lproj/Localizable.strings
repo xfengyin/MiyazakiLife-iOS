@@ -1,0 +1,98 @@
+// Localizable.strings (Chinese Simplified)
+
+"tab.home" = "首页";
+"tab.weather" = "天气";
+"tab.settings" = "设置";
+
+"nav.title.home" = "宫崎生活";
+"nav.title.weather" = "天气";
+"nav.title.settings" = "设置";
+
+"section.appearance" = "外观";
+"section.notifications" = "通知";
+"section.location" = "位置服务";
+"section.about" = "关于";
+"section.developer" = "开发者";
+
+"theme.light" = "浅色";
+"theme.dark" = "深色";
+"theme.system" = "自动";
+
+"unit.celsius" = "摄氏度 (°C)";
+"unit.fahrenheit" = "华氏度 (°F)";
+
+"toggle.weatherAlerts" = "天气预警";
+"toggle.dailyReminder" = "每日提醒";
+
+"button.refresh" = "刷新";
+"button.retry" = "重试";
+"button.clearCache" = "清除缓存";
+"button.resetSettings" = "重置设置";
+"button.goToSettings" = "前往设置";
+"button.cancel" = "取消";
+
+"label.location" = "位置";
+"label.temperature" = "温度";
+"label.humidity" = "湿度";
+"label.windSpeed" = "风速";
+"label.feelsLike" = "体感";
+"label.hourlyForecast" = "小时预报";
+"label.dailyForecast" = "多日预报";
+"label.dailyTip" = "每日提示";
+"label.version" = "版本";
+"label.build" = "构建";
+"label.privacyPolicy" = "隐私政策";
+"label.termsOfUse" = "用户协议";
+"label.locationEnabled" = "已启用";
+"label.locationDisabled" = "已禁用";
+"label.lastUpdated" = "最后更新";
+"label.neverUpdated" = "从未更新";
+
+"title.goodMorning" = "早上好，宫崎！☀️";
+"title.goodAfternoon" = "下午好，宫崎！🌤️";
+"title.goodEvening" = "晚上好，宫崎！🌙";
+"title.lateNight" = "夜深了，宫崎！⭐";
+
+"error.invalidURL" = "无效的 URL";
+"error.networkError" = "网络错误，请检查连接";
+"error.parseError" = "数据解析失败";
+"error.locationDenied" = "定位服务被拒绝";
+"error.locationUnavailable" = "无法获取位置信息";
+"error.noData" = "暂无数据";
+"error.cacheError" = "缓存读取失败";
+"error.unknown" = "未知错误";
+
+"alert.title.locationServices" = "定位服务";
+"alert.message.locationPermission" = "需要在系统设置中启用定位服务以获取当地天气信息。";
+"alert.title.clearCache" = "清除缓存";
+"alert.message.clearCache" = "确定要清除所有缓存数据吗？这不会影响您的设置。";
+"alert.title.resetSettings" = "重置设置";
+"alert.message.resetSettings" = "确定要将所有设置恢复为默认值吗？";
+
+"loading.weather" = "正在加载天气数据";
+"loading.pleaseWait" = "请稍候...";
+"loading.refreshing" = "刷新中...";
+
+"empty.title.weather" = "暂无天气数据";
+"empty.message.weather" = "无法获取天气信息，请检查网络连接后重试。";
+
+"feature.weather" = "天气";
+"feature.schedule" = "日程";
+"feature.notes" = "笔记";
+"feature.more" = "更多";
+
+"hint.tapToOpen" = "点击打开";
+"hint.selectFeature" = "选择要访问的功能";
+
+"weather.sunny" = "晴朗";
+"weather.mostlySunny" = "大致晴朗";
+"weather.partlyCloudy" = "多云";
+"weather.cloudy" = "阴天";
+"weather.foggy" = "雾";
+"weather.drizzle" = "毛毛雨";
+"weather.rain" = "下雨";
+"weather.snow" = "下雪";
+"weather.thunderstorm" = "雷暴";
+
+"temp.celsius" = "°C";
+"temp.fahrenheit" = "°F";

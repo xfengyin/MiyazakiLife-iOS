@@ -1,0 +1,98 @@
+// Localizable.strings (Japanese)
+
+"tab.home" = "ホーム";
+"tab.weather" = "天気";
+"tab.settings" = "設定";
+
+"nav.title.home" = "宮崎生活";
+"nav.title.weather" = "天気";
+"nav.title.settings" = "設定";
+
+"section.appearance" = "外観";
+"section.notifications" = "通知";
+"section.location" = "位置情報";
+"section.about" = "アプリについて";
+"section.developer" = "開発者";
+
+"theme.light" = "ライト";
+"theme.dark" = "ダーク";
+"theme.system" = "システム";
+
+"unit.celsius" = "摂氏 (°C)";
+"unit.fahrenheit" = "華氏 (°F)";
+
+"toggle.weatherAlerts" = "天気警報";
+"toggle.dailyReminder" = "毎日の通知";
+
+"button.refresh" = "更新";
+"button.retry" = "再試行";
+"button.clearCache" = "キャッシュをクリア";
+"button.resetSettings" = "設定をリセット";
+"button.goToSettings" = "設定を開く";
+"button.cancel" = "キャンセル";
+
+"label.location" = "位置";
+"label.temperature" = "気温";
+"label.humidity" = "湿度";
+"label.windSpeed" = "風速";
+"label.feelsLike" = "体感温度";
+"label.hourlyForecast" = "時間別予報";
+"label.dailyForecast" = "週間予報";
+"label.dailyTip" = "今日のヒント";
+"label.version" = "バージョン";
+"label.build" = "ビルド";
+"label.privacyPolicy" = "プライバシーポリシー";
+"label.termsOfUse" = "利用規約";
+"label.locationEnabled" = "有効";
+"label.locationDisabled" = "無効";
+"label.lastUpdated" = "最終更新";
+"label.neverUpdated" = "更新なし";
+
+"title.goodMorning" = "おはよう、宮崎！☀️";
+"title.goodAfternoon" = "こんにちは、宮崎！🌤️";
+"title.goodEvening" = "こんばんは、宮崎！🌙";
+"title.lateNight" = "夜更かしですね、宮崎！⭐";
+
+"error.invalidURL" = "無効なURL";
+"error.networkError" = "ネットワークエラー。接続を確認してください";
+"error.parseError" = "データの解析に失敗しました";
+"error.locationDenied" = "位置情報へのアクセスが拒否されました";
+"error.locationUnavailable" = "位置情報を取得できませんでした";
+"error.noData" = "データがありません";
+"error.cacheError" = "キャッシュの読み込みに失敗しました";
+"error.unknown" = "不明なエラー";
+
+"alert.title.locationServices" = "位置情報";
+"alert.message.locationPermission" = "現在の天気を取得するには、設定で位置情報サービスを有効にしてください。";
+"alert.title.clearCache" = "キャッシュをクリア";
+"alert.message.clearCache" = "すべてのキャッシュデータをクリアしてもよろしいですか？設定には影響しません。";
+"alert.title.resetSettings" = "設定をリセット";
+"alert.message.resetSettings" = "すべての設定をデフォルトにリセットしてもよろしいですか？";
+
+"loading.weather" = "天気データを読み込み中";
+"loading.pleaseWait" = "お待ちください...";
+"loading.refreshing" = "更新中...";
+
+"empty.title.weather" = "天気データがありません";
+"empty.message.weather" = "天気情報を取得できませんでした。ネットワーク接続を確認して、再試行してください。";
+
+"feature.weather" = "天気";
+"feature.schedule" = "スケジュール";
+"feature.notes" = "メモ";
+"feature.more" = "その他";
+
+"hint.tapToOpen" = "タップして開く";
+"hint.selectFeature" = "アクセスする機能を選択";
+
+"weather.sunny" = "晴れ";
+"weather.mostlySunny" = "晴れ時々曇り";
+"weather.partlyCloudy" = "曇り時々晴れ";
+"weather.cloudy" = "曇り";
+"weather.foggy" = "霧";
+"weather.drizzle" = "霧雨";
+"weather.rain" = "雨";
+"weather.snow" = "雪";
+"weather.thunderstorm" = "雷雨";
+
+"temp.celsius" = "°C";
+"temp.fahrenheit" = "°F";

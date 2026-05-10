@@ -64,12 +64,18 @@ struct GreetingHeader: View {
             Text(greeting)
                 .font(.system(size: 32, weight: .bold, design: .rounded))
                 .foregroundColor(.primary)
+                .weatherAccessibility(
+                    label: VoiceOverLabels.Home.greeting,
+                    hint: VoiceOverLabels.Home.greetingHint
+                )
+                .accessibilityIdentifier(.greetingHeader)
 
             if let weather = weather {
                 HStack(spacing: 8) {
                     Image(systemName: weather.iconName)
                         .font(.title2)
                         .foregroundColor(.primaryBlue)
+                        .accessibilityHidden(true)
 
                     Text(weather.description)
                         .font(.subheadline)
@@ -77,6 +83,7 @@ struct GreetingHeader: View {
 
                     Text("•")
                         .foregroundColor(.secondary)
+                        .accessibilityHidden(true)
 
                     Text(weather.temperatureString)
                         .font(.subheadline)
@@ -112,11 +119,17 @@ struct WeatherSummaryCard: View {
                 Image(systemName: weather.iconName)
                     .font(.system(size: 50))
                     .foregroundColor(.primaryBlue)
+                    .accessibilityHidden(true)
             }
 
             HStack(alignment: .bottom) {
                 Text(weather.temperatureString)
                     .font(.system(size: 56, weight: .bold, design: .rounded))
+                    .weatherAccessibility(
+                        label: VoiceOverLabels.Weather.temperature,
+                        value: weather.temperatureString,
+                        hint: VoiceOverLabels.Weather.temperatureHint
+                    )
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text("体感 \(Int(weather.feelsLike))°")
@@ -142,6 +155,12 @@ struct WeatherSummaryCard: View {
         .background(Color(.systemGray6))
         .cornerRadius(20)
         .pressableStyle(isPressed: isPressed)
+        .weatherAccessibility(
+            label: VoiceOverLabels.Home.weatherSummary,
+            value: "\(weather.description), \(weather.temperatureString)",
+            hint: VoiceOverLabels.Home.weatherSummaryHint
+        )
+        .accessibilityIdentifier(.weatherSummaryCard)
         .onLongPressGesture(minimumDuration: .infinity, pressing: { pressing in
             isPressed = pressing
         }, perform: {})
@@ -221,6 +240,7 @@ struct FeatureCard: View {
                 Image(systemName: feature.icon)
                     .font(.system(size: 28))
                     .foregroundColor(feature.color)
+                    .accessibilityHidden(true)
             }
 
             Text(feature.title)
@@ -234,6 +254,7 @@ struct FeatureCard: View {
         .cornerRadius(16)
         .scaleEffect(isPressed ? 0.95 : 1.0)
         .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isPressed)
+        .featureCardAccessibility(title: feature.title)
     }
 }
 
@@ -248,6 +269,7 @@ struct DailyTipCard: View {
                 Image(systemName: "lightbulb.fill")
                     .foregroundColor(.yellow)
                     .font(.title3)
+                    .accessibilityHidden(true)
 
                 Text(tip.title)
                     .font(.headline)
@@ -265,6 +287,11 @@ struct DailyTipCard: View {
         .cornerRadius(16)
         .opacity(isVisible ? 1 : 0)
         .offset(y: isVisible ? 0 : 20)
+        .weatherAccessibility(
+            label: VoiceOverLabels.Home.dailyTip,
+            hint: VoiceOverLabels.Home.dailyTipHint
+        )
+        .accessibilityIdentifier(.dailyTipCard)
         .onAppear {
             withAnimation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.2)) {
                 isVisible = true

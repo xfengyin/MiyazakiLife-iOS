@@ -1,0 +1,98 @@
+// Localizable.strings (English)
+
+"tab.home" = "Home";
+"tab.weather" = "Weather";
+"tab.settings" = "Settings";
+
+"nav.title.home" = "Miyazaki Life";
+"nav.title.weather" = "Weather";
+"nav.title.settings" = "Settings";
+
+"section.appearance" = "Appearance";
+"section.notifications" = "Notifications";
+"section.location" = "Location Services";
+"section.about" = "About";
+"section.developer" = "Developer";
+
+"theme.light" = "Light";
+"theme.dark" = "Dark";
+"theme.system" = "System";
+
+"unit.celsius" = "Celsius (°C)";
+"unit.fahrenheit" = "Fahrenheit (°F)";
+
+"toggle.weatherAlerts" = "Weather Alerts";
+"toggle.dailyReminder" = "Daily Reminder";
+
+"button.refresh" = "Refresh";
+"button.retry" = "Retry";
+"button.clearCache" = "Clear Cache";
+"button.resetSettings" = "Reset Settings";
+"button.goToSettings" = "Go to Settings";
+"button.cancel" = "Cancel";
+
+"label.location" = "Location";
+"label.temperature" = "Temperature";
+"label.humidity" = "Humidity";
+"label.windSpeed" = "Wind Speed";
+"label.feelsLike" = "Feels Like";
+"label.hourlyForecast" = "Hourly Forecast";
+"label.dailyForecast" = "7-Day Forecast";
+"label.dailyTip" = "Daily Tip";
+"label.version" = "Version";
+"label.build" = "Build";
+"label.privacyPolicy" = "Privacy Policy";
+"label.termsOfUse" = "Terms of Use";
+"label.locationEnabled" = "Enabled";
+"label.locationDisabled" = "Disabled";
+"label.lastUpdated" = "Last Updated";
+"label.neverUpdated" = "Never Updated";
+
+"title.goodMorning" = "Good Morning, Miyazaki! ☀️";
+"title.goodAfternoon" = "Good Afternoon, Miyazaki! 🌤️";
+"title.goodEvening" = "Good Evening, Miyazaki! 🌙";
+"title.lateNight" = "Late Night, Miyazaki! ⭐";
+
+"error.invalidURL" = "Invalid URL";
+"error.networkError" = "Network error, please check your connection";
+"error.parseError" = "Failed to parse data";
+"error.locationDenied" = "Location services denied";
+"error.locationUnavailable" = "Unable to get location";
+"error.noData" = "No data available";
+"error.cacheError" = "Cache read failed";
+"error.unknown" = "Unknown error";
+
+"alert.title.locationServices" = "Location Services";
+"alert.message.locationPermission" = "Please enable location services in Settings to get weather information for your current location.";
+"alert.title.clearCache" = "Clear Cache";
+"alert.message.clearCache" = "Are you sure you want to clear all cache data? This will not affect your settings.";
+"alert.title.resetSettings" = "Reset Settings";
+"alert.message.resetSettings" = "Are you sure you want to reset all settings to their defaults?";
+
+"loading.weather" = "Loading weather data";
+"loading.pleaseWait" = "Please wait...";
+"loading.refreshing" = "Refreshing...";
+
+"empty.title.weather" = "No Weather Data";
+"empty.message.weather" = "Unable to get weather information. Please check your network connection and try again.";
+
+"feature.weather" = "Weather";
+"feature.schedule" = "Schedule";
+"feature.notes" = "Notes";
+"feature.more" = "More";
+
+"hint.tapToOpen" = "Tap to open";
+"hint.selectFeature" = "Select a feature to access";
+
+"weather.sunny" = "Sunny";
+"weather.mostlySunny" = "Mostly Sunny";
+"weather.partlyCloudy" = "Partly Cloudy";
+"weather.cloudy" = "Cloudy";
+"weather.foggy" = "Foggy";
+"weather.drizzle" = "Drizzle";
+"weather.rain" = "Rain";
+"weather.snow" = "Snow";
+"weather.thunderstorm" = "Thunderstorm";
+
+"temp.celsius" = "°C";
+"temp.fahrenheit" = "°F";
